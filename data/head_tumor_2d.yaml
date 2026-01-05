@@ -1,0 +1,5 @@
+# data/head_tumor.yaml
+train: /root/dataset/head_tumor_2d/images/train
+val: /root/dataset/head_tumor_2d/images/val
+nc: 1
+names: ['tumor']

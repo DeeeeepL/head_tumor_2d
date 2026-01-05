@@ -17,6 +17,34 @@ from utils.general import non_max_suppression, make_divisible, scale_coords, inc
 from utils.plots import color_list, plot_one_box
 from utils.torch_utils import time_synchronized
 
+##### mri head ####
+class TriModalStem(nn.Module):
+    """
+    Input:  (B, 3, H, W)  where channels are [T1CE, FLAIR, T2]
+    Output: (B, c_out, H/2, W/2)  (默认stride=2，匹配YOLO第一层下采样)
+    """
+    def __init__(self, c_out=32, k=3, s=2, c_mid=None):
+        super().__init__()
+        if c_mid is None:
+            c_mid = max(8, c_out // 4)  # 每个模态分支的宽度，可调
+
+        # 三个独立input head
+        self.t1ce  = Conv(1, c_mid, k=k, s=s)
+        self.flair = Conv(1, c_mid, k=k, s=s)
+        self.t2wi    = Conv(1, c_mid, k=k, s=s)
+
+        # 融合：concat后用1x1投影到c_out
+        self.fuse = Conv(c_mid * 3, c_out, k=1, s=1)
+
+    def forward(self, x):
+        # x: [B,3,H,W]
+        x1 = self.t1ce(x[:, 0:1, :, :])
+        x2 = self.flair(x[:, 1:2, :, :])
+        x3 = self.t2wi(x[:, 2:3, :, :])
+        y = torch.cat([x1, x2, x3], dim=1)
+        y = self.fuse(y)
+        print(y.shape)
+        return y
 
 ##### basic ####
 
