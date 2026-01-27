@@ -1,5 +1,6 @@
 # data/head_tumor.yaml
-train: /root/dataset/head_tomor_2d_LGG_GBM/images/train
-val: /root/dataset/head_tomor_2d_LGG_GBM/images/val
+# train: /root/dataset/head_tomor_2d_LGG_GBM/images/train
+train: /root/dataset/BJTT_GBM_LGG_det2d_allpos/images/train
+val: /root/dataset/BJTT_GBM_LGG_det2d_allpos/images/val
 nc: 1
 names: ['tumor']

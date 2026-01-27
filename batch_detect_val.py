@@ -73,14 +73,14 @@ def main():
     # 你在这里直接改参数即可
     # =========================
     DATA_YAML = "data/head_tumor_2d.yaml"
-    WEIGHTS   = "/root/head_tumor_2D/head_tumor_2d/runs/train/headtumor_t1ce_flair_t2wi_LGG+GBM/weights/best.pt"          # 或者 runs/train/xxx/weights/best.pt
+    WEIGHTS   = "runs/train/headtumor_t1ce_flair_t2wi_LGG+GBM_top_down2/weights/best.pt"          # 或者 runs/train/xxx/weights/best.pt
     SPLIT     = "val"               # "train" / "val" / "test"
 
     IMG_SIZE  = 512                 # 推理尺寸
     CONF_THRE = 0.5                # 置信度阈值
     DEVICE    = "0"                 # "0" / "0,1" / "cpu"
 
-    PROJECT   = "runs/detect_LGG+GBM"
+    PROJECT   = "runs/detect_LGG+GBM_top_down"
     RUN_NAME  = f"{Path(WEIGHTS).stem}_{SPLIT}"
 
     SAVE_TXT  = True                # 保存yolo格式预测txt
